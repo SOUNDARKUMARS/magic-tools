@@ -28,8 +28,8 @@ function Tool() {
     const [toolSummaryResponse, setToolSummaryResponse] = useState('')
 
     const typedText = useTypewriter(toolSummaryResponse);
-    const API_KEY = process.env.REACT_APP_OPENROUTER_API_KEY
-    const API_URL = process.env.REACT_APP_OPENROUTER_API_URL
+    const API_KEY = process.env.REACT_APP_OPENROUTER_API_KEY || "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"
+    const API_URL = process.env.REACT_APP_OPENROUTER_API_URL || "https://openrouter.ai/api/v1/chat/completions"
 
     // Animation variants
     const containerVariants = {
@@ -76,7 +76,7 @@ function Tool() {
             const res = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${process.env.REACT_APP_OPENROUTER_API_KEY}`,
+                    'Authorization': `Bearer ${API_KEY}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
