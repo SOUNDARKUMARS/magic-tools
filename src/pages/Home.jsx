@@ -90,8 +90,8 @@ function Home() {
     }
 
     // TODO: move to .env
-    const API_KEY = process.env.REACT_APP_OPENROUTER_API_KEY || "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"
-    const API_URL = process.env.REACT_APP_OPENROUTER_API_URL || "https://openrouter.ai/api/v1/chat/completions"
+    const API_KEY = "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"
+    const API_URL =  "https://openrouter.ai/api/v1/chat/completions"
 
     useEffect(() => {
         if (authChecked) {
