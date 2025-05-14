@@ -68,3 +68,33 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Magic Tools App
+
+## Deployment Instructions
+
+### Vercel Environment Variables
+
+To properly deploy this application on Vercel, you need to set the following environment variables in your Vercel project settings:
+
+1. Navigate to your project on Vercel
+2. Go to Settings > Environment Variables
+3. Add the following variables:
+
+```
+VITE_OPENROUTER_API_KEY=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
+VITE_OPENROUTER_API_URL=https://openrouter.ai/api/v1/chat/completions
+```
+
+### Local Development
+
+For local development, create a `.env.local` file in the root directory with the following content:
+
+```
+VITE_OPENROUTER_API_KEY=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
+VITE_OPENROUTER_API_URL=https://openrouter.ai/api/v1/chat/completions
+```
+
+### HTTP Referrer Issue
+
+This application needs to send the correct HTTP referrer header to authenticate with the OpenRouter API. Make sure your Vercel domain is properly configured in your project settings.

@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { supabase } from '../supabase-client'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@heroui/react'
-import { MdModeEditOutline, MdAddBox, MdSettings, MdVisibility, MdVisibilityOff, MdSave, MdDone, MdAutoAwesome } from 'react-icons/md'
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Input, Checkbox, Select, SelectItem } from '@heroui/react'
+import { MdModeEditOutline, MdAddBox, MdSettings, MdVisibility, MdVisibilityOff, MdSave, MdDone, MdAutoAwesome, MdArrowBack, MdFilterAlt, MdSort, MdAdsClick } from 'react-icons/md'
 import { IoMdTrash } from 'react-icons/io'
-import { FiColumns, FiDownload, FiPlus } from 'react-icons/fi'
+import { FiColumns, FiDownload, FiPlus, FiPlusCircle, FiChevronDown, FiChevronUp } from 'react-icons/fi'
+import { AiOutlineBars } from 'react-icons/ai'
+import { BsThreeDotsVertical, BsArrowDown, BsArrowUp, BsArrowUpDown } from 'react-icons/bs'
+import { LuBarChart3 } from 'react-icons/lu'
 import { useTypewriter } from '../utils/typedText'
 import { FaCheck, FaSort, FaSortUp, FaSortDown } from 'react-icons/fa'
+import { OPENROUTER_API_URL, getApiHeaders } from '../config'
 
 function Tool() {
     
@@ -28,8 +32,6 @@ function Tool() {
     const [toolSummaryResponse, setToolSummaryResponse] = useState('')
 
     const typedText = useTypewriter(toolSummaryResponse);
-    const API_KEY =  "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"
-    const API_URL =  "https://openrouter.ai/api/v1/chat/completions"
 
     // Animation variants
     const containerVariants = {
@@ -73,14 +75,11 @@ function Tool() {
     const handleToolSummary = async () => {
         setIsLoading('summary')
         try {
-            const res = await fetch(API_URL, {
+            const res = await fetch(OPENROUTER_API_URL, {
                 method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${API_KEY}`,
-                    'Content-Type': 'application/json'
-                },
+                headers: getApiHeaders(),
                 body: JSON.stringify({
-                    model: 'microsoft/mai-ds-r1:free',
+                    model: 'open-r1/olympiccoder-32b:free',
                     messages: [
                         {
                             role: 'user',

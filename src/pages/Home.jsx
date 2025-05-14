@@ -7,6 +7,7 @@ import { supabase } from '../supabase-client';
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SessionContext } from '../App';
+import { OPENROUTER_API_URL, getApiHeaders } from '../config';
 
 function Home() {
     const navigate = useNavigate()
@@ -89,10 +90,6 @@ function Home() {
         }
     }
 
-    // TODO: move to .env
-    const API_KEY = "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"
-    const API_URL =  "https://openrouter.ai/api/v1/chat/completions"
-
     useEffect(() => {
         if (authChecked) {
             fetchTools()
@@ -174,14 +171,16 @@ function Home() {
         if (!prompt.trim() || !authChecked) return
         setIsLoading(true)
         try {
-            const res = await fetch(API_URL, {
+            console.log("Making request to OpenRouter with headers:", getApiHeaders());
+            console.log("Using model:", 'open-r1/olympiccoder-32b:free');
+            console.log("Current hostname:", window.location.hostname);
+            console.log("Current origin:", window.location.origin);
+            
+            const res = await fetch(OPENROUTER_API_URL, {
                 method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${API_KEY}`,
-                    'Content-Type': 'application/json'
-                },
+                headers: getApiHeaders(),
                 body: JSON.stringify({
-                    model: 'microsoft/mai-ds-r1:free',
+                    model: 'open-r1/olympiccoder-32b:free',
                     messages: [
                         {
                             role: 'user',
@@ -218,7 +217,13 @@ Guidelines:
             })
 
             if (res.status !== 200) {
-                throw new Error(`error in getting response! status: ${res.status}`)
+                const errorText = await res.text();
+                console.error("API Error:", {
+                    status: res.status,
+                    statusText: res.statusText,
+                    body: errorText
+                });
+                throw new Error(`Error in API response: ${res.status} - ${errorText}`);
             }
 
             const data = await res.json()
@@ -672,5 +677,3 @@ Guidelines:
 }
 
 export default Home
-
-// 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
