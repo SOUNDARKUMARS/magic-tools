@@ -76,11 +76,11 @@ function Tool() {
             const res = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${API_KEY}`,
+                    'Authorization': `Bearer ${process.env.REACT_APP_OPENROUTER_API_KEY}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    model: 'google/gemma-3-27b-it:free',
+                    model: 'microsoft/mai-ds-r1:free',
                     messages: [
                         {
                             role: 'user',
@@ -358,7 +358,7 @@ function Tool() {
                     </motion.div>
                     {/* actions buttons */}
                     <div className="flex justify-end mb-4 gap-3">
-                        <Button isLoading={isLoading === 'summary'}
+                        <Button
                             onPress={()=>alert('Coming Soon')}
                             className="inline-flex items-center px-4 py-2 border border-transparent rounded-md text-sm font-medium text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >

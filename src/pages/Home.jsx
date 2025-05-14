@@ -177,11 +177,11 @@ function Home() {
             const res = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${API_KEY}`,
+                    'Authorization': `Bearer ${process.env.REACT_APP_OPENROUTER_API_KEY}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    model: 'google/gemma-3-27b-it:free',
+                    model: 'microsoft/mai-ds-r1:free',
                     messages: [
                         {
                             role: 'user',
